@@ -15,6 +15,16 @@ public class TrainerDAO {
 	public boolean trainerSignUp(Trainer trainer) {
 		boolean isTrainerAdded = false;
 
+		try {
+			int noOfRowsUpdated = jdbcTemplate.update("insert into Trainer values (?,?) ", trainer.getTrainerId(),
+					trainer.getPassword());
+			if (noOfRowsUpdated > 0) {
+				isTrainerAdded = true;
+			}
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+
 		return isTrainerAdded;
 	}
 
