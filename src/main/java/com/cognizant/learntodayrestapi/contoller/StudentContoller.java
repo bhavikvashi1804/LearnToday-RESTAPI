@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.cognizant.learntodayrestapi.exception.StudentNotFoundException;
 import com.cognizant.learntodayrestapi.model.Student;
 import com.cognizant.learntodayrestapi.service.StudentService;
 
@@ -46,7 +47,8 @@ public class StudentContoller {
 	}
 
 	@DeleteMapping("/{id}")
-	public ResponseEntity<Object> deleteStudentEnrollment(@PathVariable("id") int id) {
+	public ResponseEntity<Object> deleteStudentEnrollment(@PathVariable("id") int id) throws StudentNotFoundException {
+
 		boolean isStudentDeleted = studentService.deleteStudent(id);
 
 		if (isStudentDeleted) {

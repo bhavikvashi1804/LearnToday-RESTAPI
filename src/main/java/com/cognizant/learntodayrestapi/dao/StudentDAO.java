@@ -24,7 +24,7 @@ public class StudentDAO {
 			int noOfRowsUpdated = jdbcTemplate.update("insert into student values (?,?,?)", s.getEnrollmentId(),
 					s.getStudentId(), s.getCourseId());
 
-			if (noOfRowsUpdated == 1) {
+			if (noOfRowsUpdated > 0) {
 				isAdded = true;
 			}
 		} catch (Exception e) {
@@ -34,9 +34,24 @@ public class StudentDAO {
 		return isAdded;
 	}
 
-	public boolean deleteStudent(int id) {
-		
-		
-		return false;
+	public boolean deleteStudent(int id) throws StudentNotFoundException {
+
+		boolean isDeleted = false;
+
+		try {
+			int noOfRowsUpdated = jdbcTemplate.update("delete from student where enrollmentId = ?", id);
+
+			if (noOfRowsUpdated > 0) {
+				isDeleted = true;
+			} else {
+				throw new StudentNotFoundException();
+			}
+		} catch (StudentNotFoundException e) {
+			throw new StudentNotFoundException();
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+
+		return isDeleted;
 	}
 }
