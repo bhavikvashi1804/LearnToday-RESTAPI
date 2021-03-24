@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cognizant.learntodayrestapi.dao.TrainerDAO;
+import com.cognizant.learntodayrestapi.exception.TrainerNotFoundException;
 import com.cognizant.learntodayrestapi.model.Trainer;
 
 @Service
@@ -16,8 +17,8 @@ public class TrainerService {
 		return trainerDAO.trainerSignUp(trainer);
 	}
 
-	public boolean updatePassword(int id, Trainer trainer) {
-		return updatePassword(id, trainer);
+	public boolean updatePassword(int id, Trainer trainer) throws TrainerNotFoundException {
+		return trainerDAO.updatePassword(id, trainer);
 	}
 
 }

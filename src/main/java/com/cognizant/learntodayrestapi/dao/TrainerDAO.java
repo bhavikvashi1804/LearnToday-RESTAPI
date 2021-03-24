@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
+import com.cognizant.learntodayrestapi.exception.TrainerNotFoundException;
 import com.cognizant.learntodayrestapi.model.Trainer;
 
 @Component
@@ -28,8 +29,22 @@ public class TrainerDAO {
 		return isTrainerAdded;
 	}
 
-	public boolean updatePassword(int id, Trainer trainer) {
+	public boolean updatePassword(int id, Trainer trainer) throws TrainerNotFoundException {
 		boolean isPasswordUpdated = false;
+		try {
+			int noOfRowsUpdated = jdbcTemplate.update("update trainer set password = ? where trainerId = ?",
+					trainer.getPassword(), id);
+
+			if (noOfRowsUpdated > 0) {
+				isPasswordUpdated = true;
+			} else {
+				throw new TrainerNotFoundException();
+			}
+		} catch (TrainerNotFoundException e) {
+			throw new TrainerNotFoundException();
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
 
 		return isPasswordUpdated;
 	}
