@@ -2,6 +2,7 @@ package com.cognizant.learntodayrestapi.contoller;
 
 import java.util.Date;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cognizant.learntodayrestapi.exception.StudentNotFoundException;
+import com.cognizant.learntodayrestapi.model.Course;
 import com.cognizant.learntodayrestapi.model.Student;
+import com.cognizant.learntodayrestapi.service.CourseService;
 import com.cognizant.learntodayrestapi.service.StudentService;
 
 @RestController
@@ -26,9 +29,17 @@ public class StudentContoller {
 	@Autowired
 	private StudentService studentService;
 
+	@Autowired
+	CourseService courseService;
+
 	@GetMapping
 	public ResponseEntity<Object> getAllCourses() {
-		return null;
+		List<Course> courses = courseService.getAllCoursesSortByStartDate();
+		if (!courses.isEmpty()) {
+			return new ResponseEntity(courses, HttpStatus.OK);
+		} else {
+			return new ResponseEntity("Something went wrong", HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}
 
 	@PostMapping

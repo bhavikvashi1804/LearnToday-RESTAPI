@@ -25,4 +25,10 @@ public class GlobalExceptionHandler {
 		return new ResponseEntity(map, HttpStatus.NOT_FOUND);
 	}
 
+	@ExceptionHandler(CourseNotFoundException.class)
+	public ResponseEntity<Object> handleCourseNotFound() {
+		Map<String, String> map = new HashMap<>();
+		map.put("Message", "Searched Data is not found");
+		return new ResponseEntity(map, HttpStatus.NOT_FOUND);
+	}
 }
