@@ -30,7 +30,13 @@ public class CourseDAO {
 	}
 
 	public List<Course> getAllCoursesSortByStartDate() {
-		return null;
+		List<Course> courses = new ArrayList<Course>();
+		try {
+			courses = jdbcTemplate.query("SELECT * FROM Course ORDER BY Start_Date", new CourseListExtractor());
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		return courses;
 	}
 
 	public Course getCourseById() {
