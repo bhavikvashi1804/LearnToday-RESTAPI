@@ -3,7 +3,7 @@ LearnToday-RESTAPI
 
 
 ## Tools 
-1. Spring Starter Tool
+1. Spring Tool Suite
 2. MySQL
 3. Git 
 4. GitHub
