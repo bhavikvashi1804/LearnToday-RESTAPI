@@ -21,14 +21,14 @@ public class GlobalExceptionHandler {
 	@ExceptionHandler(TrainerNotFoundException.class)
 	public ResponseEntity<Object> handleTrainerNotFound() {
 		Map<String, String> map = new HashMap<>();
-		map.put("Message", "Searched Data is not found");
+		map.put("Message", "Searched Data not found");
 		return new ResponseEntity(map, HttpStatus.NOT_FOUND);
 	}
 
 	@ExceptionHandler(CourseNotFoundException.class)
 	public ResponseEntity<Object> handleCourseNotFound() {
 		Map<String, String> map = new HashMap<>();
-		map.put("Message", "Searched Data is not found");
+		map.put("Message", "Searched Data not found");
 		return new ResponseEntity(map, HttpStatus.NOT_FOUND);
 	}
 }
