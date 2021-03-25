@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cognizant.learntodayrestapi.dao.CourseDAO;
+import com.cognizant.learntodayrestapi.exception.CourseNotFoundException;
 import com.cognizant.learntodayrestapi.model.Course;
 
 @Service
@@ -22,8 +23,8 @@ public class CourseService {
 		return courseDAO.getAllCoursesSortByStartDate();
 	}
 
-	public Course getCourseById() {
-		return courseDAO.getCourseById();
+	public Course getCourseById(int courseId) throws CourseNotFoundException {
+		return courseDAO.getCourseById(courseId);
 	}
 
 }

@@ -7,10 +7,12 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.stereotype.Component;
 
+import com.cognizant.learntodayrestapi.exception.CourseNotFoundException;
 import com.cognizant.learntodayrestapi.model.Course;
 
 @Component
@@ -39,8 +41,25 @@ public class CourseDAO {
 		return courses;
 	}
 
-	public Course getCourseById() {
-		return null;
+	public Course getCourseById(int courseId) throws CourseNotFoundException {
+		Course course = new Course();
+		try {
+			Course fechtedCourse = jdbcTemplate.query("SELECT * FROM Course where CourseId = ?", new CourseExtractor(),
+					courseId);
+
+			course = fechtedCourse;
+
+			if (course == null) {
+				throw new CourseNotFoundException();
+			}
+
+		} catch (CourseNotFoundException e) {
+			throw new CourseNotFoundException();
+		} catch (Exception e) {
+			System.out.println(e.getClass());
+			System.out.println(e.getMessage());
+		}
+		return course;
 	}
 
 }
@@ -63,9 +82,10 @@ class CourseExtractor implements ResultSetExtractor<Course> {
 
 	@Override
 	public Course extractData(ResultSet rs) throws SQLException, DataAccessException {
-		rs.next();
-		return new Course(rs.getInt(1), rs.getString(2), rs.getFloat(3), rs.getString(4), rs.getString(5),
-				rs.getDate(6));
+		if (rs.next())
+			return new Course(rs.getInt(1), rs.getString(2), rs.getFloat(3), rs.getString(4), rs.getString(5),
+					rs.getDate(6));
+		return null;
 	}
 
 }

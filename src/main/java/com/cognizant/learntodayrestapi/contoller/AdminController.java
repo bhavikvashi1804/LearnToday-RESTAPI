@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.cognizant.learntodayrestapi.exception.CourseNotFoundException;
 import com.cognizant.learntodayrestapi.model.Course;
 import com.cognizant.learntodayrestapi.service.CourseService;
 
@@ -33,8 +34,9 @@ public class AdminController {
 	}
 
 	@GetMapping("/{CourseId}")
-	public ResponseEntity<Object> getCourseById(@PathVariable("CourseId") int CourseId) {
-		return null;
+	public ResponseEntity<Object> getCourseById(@PathVariable("CourseId") int CourseId) throws CourseNotFoundException {
+		Course course = courseService.getCourseById(CourseId);
+		return new ResponseEntity(course, HttpStatus.OK);
 	}
 
 }
