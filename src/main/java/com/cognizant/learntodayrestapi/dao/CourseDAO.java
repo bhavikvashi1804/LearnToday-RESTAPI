@@ -20,10 +20,16 @@ public class CourseDAO {
 	private JdbcTemplate jdbcTemplate;
 
 	public List<Course> getAllCourses() {
-		return null;
+		List<Course> courses = new ArrayList<Course>();
+		try {
+			courses = jdbcTemplate.query("SELECT * FROM Course", new CourseListExtractor());
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		return courses;
 	}
 
-	public List<Course> getAllCoursesSortByDate() {
+	public List<Course> getAllCoursesSortByStartDate() {
 		return null;
 	}
 
